@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCI Labs - Saad Jamil</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .lab-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .lab-card {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+            border: 2px solid transparent;
+        }
+        /* HCI Principle: Feedback on Hover */
+        .lab-card:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        /* HCI Principle: Feedback on Click */
+        .lab-card:active {
+            transform: scale(0.98);
+        }
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>HCI Labs Portfolio</h1>
+        <p>Select a laboratory exercise below:</p>
+
+        <div class="lab-links">
+            <a href="lab03.html" class="lab-card">🚀 View Lab 03</a>
+            <a href="lab04.html" class="lab-card">🎨 View Lab 04 (Design Principles)</a>
+        </div>
+
+        <div class="footer">
+            Developed by Saad Jamil
+        </div>
+    </div>
+
+</body>
+</html>
