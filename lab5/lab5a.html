@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 05(a) - Refactored Button | Saad Jamil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e8f4f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            max-width: 450px;
+            width: 90%;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #ff6b35;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #ff6b35;
+            font-size: 13px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .button-box {
+            margin: 25px 0;
+        }
+
+        #myButton {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
+            width: 200px;
+        }
+
+        #myButton:hover {
+            background: #e85d2c;
+            transform: scale(1.02);
+        }
+
+        #myButton:active {
+            transform: scale(0.96);
+        }
+
+        #myButton:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #message {
+            margin-top: 20px;
+            padding: 12px;
+            background: #f0f7ff;
+            border-radius: 12px;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+            border-left: 4px solid #ff6b35;
+            transition: all 0.3s ease;
+        }
+
+        .info {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .note {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #ff6b35;
+            margin: 15px 0;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            color: #ff6b35;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Lab 05(a): Refactored Interactive Button</h1>
+    <p class="subtitle">HTML | CSS | JavaScript (All in one file)</p>
+    
+    <div class="button-box">
+        <button id="myButton">Click Me!</button>
+        <div id="message">Ready</div>
+    </div>
+    
+    <div class="info">
+        <p>📊 Clicks: <span id="counter">0</span> / 3</p>
+        <p>📐 Fitts's Law: ID = 1.22 bits</p>
+    </div>
+    
+    <div class="note">
+        💡 Hint: Click 3 times to see what happens!
+    </div>
+    
+    <a href="index.html" class="back">← Back to Labs</a>
+</div>
+
+<script>
+    // ===== THIS JAVASCRIPT WORKS 100% =====
+    let clickCount = 0;
+    const MAX_CLICKS = 3;
+
+    // Get elements
+    const button = document.getElementById('myButton');
+    const messageDiv = document.getElementById('message');
+    const counterSpan = document.getElementById('counter');
+
+    // Function to update display
+    function updateDisplay() {
+        counterSpan.textContent = clickCount;
+        
+        if (clickCount === 0) {
+            messageDiv.innerHTML = "✅ Ready to click!";
+            messageDiv.style.borderLeftColor = "#ff6b35";
+            messageDiv.style.background = "#f0f7ff";
+            messageDiv.style.color = "#333";
+        } else if (clickCount === 1) {
+            messageDiv.innerHTML = "✅ Processed 1 time";
+            messageDiv.style.borderLeftColor = "#ff6b35";
+            messageDiv.style.background = "#f0f7ff";
+            messageDiv.style.color = "#333";
+        } else if (clickCount === 2) {
+            messageDiv.innerHTML = "⚠️ WARNING! One click left! ⚠️";
+            messageDiv.style.borderLeftColor = "#ff9800";
+            messageDiv.style.background = "#fff8e1";
+            messageDiv.style.color = "#e65100";
+        } else if (clickCount === 3) {
+            messageDiv.innerHTML = "⛔ LIMIT REACHED! Refresh page to try again ⛔";
+            messageDiv.style.borderLeftColor = "#dc3545";
+            messageDiv.style.background = "#ffebee";
+            messageDiv.style.color = "#c62828";
+        }
+    }
+
+    // Button click handler
+    function handleClick() {
+        // Don't do anything if already at max
+        if (clickCount >= MAX_CLICKS) {
+            console.log("Button is disabled");
+            return;
+        }
+        
+        // Increase count
+        clickCount++;
+        console.log("Clicked! Count = " + clickCount);
+        
+        // Visual feedback - button shrinks
+        button.style.transform = "scale(0.95)";
+        setTimeout(() => {
+            button.style.transform = "scale(1)";
+        }, 100);
+        
+        // Update the display
+        updateDisplay();
+        
+        // If reached max clicks, disable the button
+        if (clickCount === MAX_CLICKS) {
+            button.disabled = true;
+            button.style.background = "#ccc";
+            button.style.cursor = "not-allowed";
+        }
+    }
+
+    // Connect the button click to the handler
+    button.addEventListener('click', handleClick);
+
+    // Initialize display
+    updateDisplay();
+    console.log("Lab 05(a) is ready! Click the orange button.");
+</script>
+
+</body>
+</html>
