@@ -8,12 +8,12 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            background-color: #f4f4f9;
+            background: #1a1a2e;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
             background: white;
@@ -21,7 +21,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
         }
         h1 {
@@ -40,45 +40,49 @@
         .lab-card {
             text-decoration: none;
             color: white;
-            background-color: #007bff;
+            background: #007bff;
             padding: 15px;
             border-radius: 8px;
             font-weight: bold;
-            transition: transform 0.2s, background-color 0.2s;
-            border: 2px solid transparent;
+            transition: transform 0.2s;
         }
-        /* HCI Principle: Feedback on Hover */
         .lab-card:hover {
-            background-color: #0056b3;
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background: #0056b3;
         }
-        /* HCI Principle: Feedback on Click */
-        .lab-card:active {
-            transform: scale(0.98);
+        .lab-card.lab5 {
+            background: #ff6b35;
+        }
+        .lab-card.lab5:hover {
+            background: #e85d2c;
         }
         .footer {
             margin-top: 2rem;
             font-size: 0.8rem;
             color: #999;
         }
+        .badge {
+            background: #28a745;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>HCI Labs Portfolio</h1>
         <p>Select a laboratory exercise below:</p>
-
         <div class="lab-links">
-            <a href="lab03.html" class="lab-card">🚀 View Lab 03</a>
-            <a href="lab04.html" class="lab-card">🎨 View Lab 04 (Design Principles)</a>
+            <a href="lab03.html" class="lab-card">🔘 Lab 03 - Basic Button</a>
+            <a href="lab04.html" class="lab-card">🎨 Lab 04 - Design Principles</a>
+            <a href="lab05a.html" class="lab-card lab5">⚡ Lab 05(a) - Refactored Button <span class="badge">NEW</span></a>
         </div>
-
         <div class="footer">
-            Developed by Saad Jamil
+            Developed by Saad Jamil | HCI & Computer Graphics
         </div>
     </div>
-
 </body>
 </html>
