@@ -3,47 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 07 - Keyboard Reaction Time | Saad Jamil</title>
+    <title>Lab 07 - Reaction Time Test | Saad Jamil</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>⌨️ Keyboard Reaction Time Test</h1>
+    <h1>⏱️ Reaction Time Test</h1>
     <p class="subtitle">Press <kbd>A</kbd> for LETTER | Press <kbd>L</kbd> for NUMBER</p>
     
+    <!-- Stimulus Display -->
     <div class="stimulus-box" id="stimulus">
         ?
     </div>
     
-    <div class="info-panel">
-        <div class="info-item">
-            <span class="label">📊 Trial:</span>
-            <span class="value" id="trialCount">0</span>
-            <span class="label">/ 10</span>
+    <!-- Stats Panel -->
+    <div class="stats-panel">
+        <div class="stat">
+            <span class="stat-label">📋 Trial</span>
+            <span class="stat-value" id="trial">0</span>
         </div>
-        <div class="info-item">
-            <span class="label">✅ Correct:</span>
-            <span class="value" id="correctCount">0</span>
+        <div class="stat">
+            <span class="stat-label">✅ Correct</span>
+            <span class="stat-value" id="correct">0</span>
         </div>
-        <div class="info-item">
-            <span class="label">⏱️ Last RT:</span>
-            <span class="value" id="lastRT">—</span>
-            <span class="label">ms</span>
+        <div class="stat">
+            <span class="stat-label">⏱️ Last RT</span>
+            <span class="stat-value" id="lastRT">—</span>
+            <span class="stat-unit">ms</span>
         </div>
-        <div class="info-item">
-            <span class="label">📈 Average RT:</span>
-            <span class="value" id="avgRT">—</span>
-            <span class="label">ms</span>
+        <div class="stat">
+            <span class="stat-label">📊 Avg RT</span>
+            <span class="stat-value" id="avgRT">—</span>
+            <span class="stat-unit">ms</span>
         </div>
     </div>
     
+    <!-- Status Message -->
     <div class="status" id="status">
-        ⚡ Press SPACE to start
+        Press SPACE to start
     </div>
     
-    <div class="note">
-        💡 Keep fingers on <kbd>A</kbd> (Letter) and <kbd>L</kbd> (Number)
+    <!-- Instructions -->
+    <div class="instructions">
+        <p>💡 <strong>How to play:</strong></p>
+        <ul>
+            <li>Keep fingers on <kbd>A</kbd> (Letter) and <kbd>L</kbd> (Number)</li>
+            <li>Press <kbd>SPACE</kbd> to start</li>
+            <li>When you see a <strong style="color:#ff6b35">LETTER</strong> → press <kbd>A</kbd></li>
+            <li>When you see a <strong style="color:#ff6b35">NUMBER</strong> → press <kbd>L</kbd></li>
+            <li>Complete 10 trials to see your score!</li>
+        </ul>
     </div>
 </div>
 
