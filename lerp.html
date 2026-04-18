@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LERP Lab</title>
+    <style>
+        body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        canvas { background: white; border: 2px solid #ff6b35; cursor: crosshair; }
+        .info { text-align: center; color: white; margin-top: 10px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<div>
+    <canvas id="canvas" width="500" height="400"></canvas>
+    <div class="info">LERP Factor (t): <span id="tValue">0.05</span> | <button id="slow">Slow</button> <button id="normal">Normal</button> <button id="fast">Fast</button></div>
+</div>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    let circleX = 250, circleY = 200;
+    let mouseX = 250, mouseY = 200, mouseIn = false;
+    let t = 0.05;
+    
+    function lerp(start, end, t) { return start + (end - start) * t; }
+    
+    function draw() {
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, 500, 400);
+        
+        if (mouseIn) {
+            ctx.strokeStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(mouseX - 10, mouseY);
+            ctx.lineTo(mouseX + 10, mouseY);
+            ctx.moveTo(mouseX, mouseY - 10);
+            ctx.lineTo(mouseX, mouseY + 10);
+            ctx.stroke();
+        }
+        
+        ctx.fillStyle = '#00cc44';
+        ctx.beginPath();
+        ctx.arc(circleX, circleY, 15, 0, Math.PI * 2);
+        ctx.fill();
+        
+        document.getElementById('tValue').innerText = t;
+    }
+    
+    function animate() {
+        if (mouseIn) {
+            circleX = lerp(circleX, mouseX, t);
+            circleY = lerp(circleY, mouseY, t);
+        }
+        draw();
+        requestAnimationFrame(animate);
+    }
+    
+    canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouseX = (e.clientX - rect.left) * (500 / rect.width);
+        mouseY = (e.clientY - rect.top) * (400 / rect.height);
+        mouseIn = true;
+    };
+    canvas.onmouseleave = () => mouseIn = false;
+    
+    document.getElementById('slow').onclick = () => t = 0.02;
+    document.getElementById('normal').onclick = () => t = 0.05;
+    document.getElementById('fast').onclick = () => t = 0.10;
+    
+    animate();
+</script>
+
+</body>
+</html>
