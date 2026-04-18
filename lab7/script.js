@@ -1,177 +1,176 @@
 // ============================================
-// Lab 07 - Keyboard Reaction Time Test
-// Letter = Press A | Number = Press L
+// LAB 07: Keyboard Reaction Time Test
+// Simple version - Easy to understand and explain
 // ============================================
 
-// ===== VARIABLES (as per flowchart) =====
-let trials = 0;      // Number of trials completed
-let correct = 0;     // Number of correct answers
-let sumRT = 0;       // Sum of all reaction times (for average)
-let avgRT = 0;       // Average reaction time
+// ---------- VARIABLES (Easy to understand names) ----------
+let trialNumber = 0;        // How many trials done (0 to 10)
+let correctAnswers = 0;     // How many correct answers
+let totalReactionTime = 0;  // Sum of all reaction times
 
-let currentStimulus = '';   // Current letter or number shown
-let currentType = '';        // 'letter' or 'number'
-let startTime = 0;           // When stimulus appeared
-let isActive = false;        // Is test running?
+let currentItem = '';       // What is shown on screen (like 'K' or '5')
+let itemType = '';          // Is it 'letter' or 'number'
+let timeWhenShown = 0;      // When did the item appear on screen
+let testRunning = false;    // Is test active or not?
 
-const MAX_TRIALS = 10;       // Total trials needed
+const TOTAL_TRIALS = 10;    // We will do 10 trials
 
-// ===== DOM Elements =====
-const stimulusDiv = document.getElementById('stimulus');
-const trialSpan = document.getElementById('trial');
-const correctSpan = document.getElementById('correct');
-const lastRTSpan = document.getElementById('lastRT');
-const avgRTSpan = document.getElementById('avgRT');
-const statusDiv = document.getElementById('status');
+// ---------- Get all HTML elements ----------
+const bigBox = document.getElementById('stimulus');     // Big box showing letter/number
+const trialSpan = document.getElementById('trial');     // Shows trial number
+const correctSpan = document.getElementById('correct'); // Shows correct count
+const lastRTSpan = document.getElementById('lastRT');   // Shows last reaction time
+const avgRTSpan = document.getElementById('avgRT');     // Shows average reaction time
+const messageBox = document.getElementById('message');   // Shows status messages
 
-// ===== Helper Functions =====
-
-// Get random letter (A to Z)
+// ---------- FUNCTION 1: Get random LETTER (A to Z) ----------
 function getRandomLetter() {
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const randomIndex = Math.floor(Math.random() * 26);
+    let letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let randomIndex = Math.floor(Math.random() * 26);  // Random number 0 to 25
     return letters[randomIndex];
 }
 
-// Get random number (0 to 9)
+// ---------- FUNCTION 2: Get random NUMBER (0 to 9) ----------
 function getRandomNumber() {
-    return Math.floor(Math.random() * 10).toString();
+    return Math.floor(Math.random() * 10);  // Random number 0 to 9
 }
 
-// Generate new stimulus (random letter or number)
-function generateStimulus() {
-    const isLetter = Math.random() < 0.5;  // 50% chance letter, 50% number
+// ---------- FUNCTION 3: Show new letter or number on screen ----------
+function showNewItem() {
+    // 50% chance letter, 50% chance number
+    let isLetter = Math.random() < 0.5;
     
     if (isLetter) {
-        currentStimulus = getRandomLetter();
-        currentType = 'letter';
+        currentItem = getRandomLetter();
+        itemType = 'letter';
     } else {
-        currentStimulus = getRandomNumber();
-        currentType = 'number';
+        currentItem = getRandomNumber();
+        itemType = 'number';
     }
     
-    // Display the stimulus on screen
-    stimulusDiv.textContent = currentStimulus;
+    // Display it on screen
+    bigBox.textContent = currentItem;
     
-    // Start timer (record when stimulus appeared)
-    startTime = Date.now();
+    // Record the time when item appeared (for reaction time calculation)
+    timeWhenShown = Date.now();
     
-    // Update status
-    statusDiv.innerHTML = '⏱️ Waiting for your response...';
-    statusDiv.style.background = '#fff3e0';
+    // Update message
+    messageBox.innerHTML = '⏱️ Waiting for your response...';
+    messageBox.style.background = '#fff3e0';
 }
 
-// Update all stats on screen
-function updateDisplay() {
-    trialSpan.textContent = trials;
-    correctSpan.textContent = correct;
+// ---------- FUNCTION 4: Update all numbers on screen ----------
+function updateScreen() {
+    trialSpan.textContent = trialNumber;
+    correctSpan.textContent = correctAnswers;
     
-    if (trials > 0 && correct > 0) {
-        avgRT = (sumRT / correct).toFixed(0);
-        avgRTSpan.textContent = avgRT;
+    // Calculate average reaction time (only if at least 1 correct)
+    if (correctAnswers > 0) {
+        let average = totalReactionTime / correctAnswers;
+        avgRTSpan.textContent = Math.round(average);
     }
 }
 
-// Show final results when test ends
-function showResults() {
-    isActive = false;
-    const accuracy = (correct / trials * 100).toFixed(1);
+// ---------- FUNCTION 5: Show final result when test ends ----------
+function showFinalResult() {
+    testRunning = false;
     
-    // Change stimulus box to green
-    stimulusDiv.textContent = '✓';
-    stimulusDiv.style.background = 'linear-gradient(135deg, #28a745, #1e7e34)';
+    // Calculate accuracy percentage
+    let accuracy = (correctAnswers / TOTAL_TRIALS) * 100;
+    let averageRT = totalReactionTime / correctAnswers;
     
-    // Show final stats
-    statusDiv.innerHTML = `
-        🎉 TEST COMPLETE! 🎉<br>
-        Accuracy: ${accuracy}% | Average RT: ${avgRT}ms<br>
-        Press SPACE to try again
-    `;
-    statusDiv.style.background = '#e8f5e9';
+    // Change big box to green checkmark
+    bigBox.textContent = '✓';
+    bigBox.style.background = '#28a745';
+    
+    // Show final message
+    messageBox.innerHTML = '🎉 TEST COMPLETE! 🎉<br>' +
+        'Accuracy: ' + accuracy + '% | Average RT: ' + Math.round(averageRT) + ' ms<br>' +
+        'Press SPACE to try again';
+    messageBox.style.background = '#e8f5e9';
 }
 
-// Reset everything and start new test
+// ---------- FUNCTION 6: Start the test (reset everything) ----------
 function startTest() {
     // Reset all variables
-    trials = 0;
-    correct = 0;
-    sumRT = 0;
-    avgRT = 0;
-    isActive = true;
+    trialNumber = 0;
+    correctAnswers = 0;
+    totalReactionTime = 0;
+    testRunning = true;
     
-    // Reset visual elements
-    stimulusDiv.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-    statusDiv.innerHTML = '⚡ Test started! Press A (Letter) or L (Number)';
-    statusDiv.style.background = '#e8f4f8';
+    // Reset visual style
+    bigBox.style.background = '#667eea';
+    messageBox.innerHTML = '⚡ Test started! Press A (Letter) or L (Number)';
+    messageBox.style.background = '#e8f4f8';
     lastRTSpan.textContent = '—';
     avgRTSpan.textContent = '—';
     
-    // Generate first stimulus
-    generateStimulus();
-    updateDisplay();
+    // Show first item
+    showNewItem();
+    updateScreen();
 }
 
-// ===== Main Logic: Handle Key Press =====
-function handleKeyPress(event) {
-    const key = event.key.toLowerCase();
+// ---------- FUNCTION 7: Main logic - What happens when you press a key ----------
+function checkKeyPress(event) {
+    let keyPressed = event.key.toLowerCase();  // Convert to lowercase (A becomes a)
     
-    // If test is not active, check for SPACE to start
-    if (!isActive) {
-        if (key === ' ' || key === 'space') {
+    // If test is not running, check if SPACE is pressed to start
+    if (!testRunning) {
+        if (keyPressed === ' ' || keyPressed === 'space') {
             startTest();
         }
         return;
     }
     
-    // Only process if user pressed A or L
-    if (key === 'a' || key === 'l') {
+    // Only do something if user pressed A or L
+    if (keyPressed === 'a' || keyPressed === 'l') {
         
-        // Calculate Reaction Time (rt = endTime - startTime)
-        const reactionTime = Date.now() - startTime;
+        // Calculate reaction time = current time - time when item appeared
+        let reactionTime = Date.now() - timeWhenShown;
         
-        let isCorrect = false;
+        let isAnswerCorrect = false;
         let expectedKey = '';
         
         // Check if answer is correct
-        if (currentType === 'letter') {
+        if (itemType === 'letter') {
             expectedKey = 'a';
-            isCorrect = (key === 'a');
+            isAnswerCorrect = (keyPressed === 'a');
         } else {
             expectedKey = 'l';
-            isCorrect = (key === 'l');
+            isAnswerCorrect = (keyPressed === 'l');
         }
         
-        // Process the response
-        if (isCorrect) {
-            correct++;
-            sumRT += reactionTime;
+        // Process the answer
+        if (isAnswerCorrect) {
+            correctAnswers++;
+            totalReactionTime = totalReactionTime + reactionTime;
             lastRTSpan.textContent = reactionTime;
-            statusDiv.innerHTML = `✅ CORRECT! (${reactionTime} ms)`;
-            statusDiv.style.background = '#e8f5e9';
+            messageBox.innerHTML = '✅ CORRECT! (' + reactionTime + ' ms)';
+            messageBox.style.background = '#e8f5e9';
         } else {
-            statusDiv.innerHTML = `❌ WRONG! Expected ${expectedKey.toUpperCase()} (${reactionTime} ms)`;
-            statusDiv.style.background = '#ffebee';
+            messageBox.innerHTML = '❌ WRONG! Expected ' + expectedKey.toUpperCase() + ' (' + reactionTime + ' ms)';
+            messageBox.style.background = '#ffebee';
         }
         
-        // Increment trial counter
-        trials++;
+        // Increase trial number
+        trialNumber++;
         
-        // Update display
-        updateDisplay();
+        // Update screen
+        updateScreen();
         
-        // Check if test is complete
-        if (trials >= MAX_TRIALS) {
-            showResults();
+        // Check if test is finished
+        if (trialNumber >= TOTAL_TRIALS) {
+            showFinalResult();
         } else {
-            // Generate next stimulus
-            generateStimulus();
+            // Show next item
+            showNewItem();
         }
     }
 }
 
-// ===== Add Event Listener =====
-document.addEventListener('keydown', handleKeyPress);
+// ---------- STEP 8: Listen for key presses ----------
+document.addEventListener('keydown', checkKeyPress);
 
-// ===== Initial Message =====
-statusDiv.innerHTML = 'Press SPACE to start';
-stimulusDiv.textContent = '?';
+// ---------- STEP 9: Initial message when page loads ----------
+messageBox.innerHTML = 'Press SPACE to start';
+bigBox.textContent = '?';
